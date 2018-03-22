@@ -53,6 +53,7 @@ public class AppMain2 extends ApplicationWindow {
 	
 	static {
 		System.setProperty("X", "startOnFirstThread");
+		//System.setProperty("file.encoding", "utf-8");
 	}
 
 	static DrawBoard board = new OPackage();

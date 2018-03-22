@@ -158,7 +158,7 @@ public class OrmService {
 			
 			String content = stream.toString();//.substring(1);// 去掉加入的BOM字符\ufeff
 			fs = new FileOutputStream(path);
-			fs.write(content.getBytes());
+			fs.write(content.getBytes("utf-8"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			//System.out.println(e.getLocalizedMessage());
