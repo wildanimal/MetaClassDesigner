@@ -163,6 +163,45 @@ public class AppMain2 extends ApplicationWindow {
 		System.out.println("root = " + Consts.root);
 		return container;
 	}
+	
+	public void saveAs() {
+		String save_dir = Consts.config.getProperty("save_dir");
+		
+		FileDialog dlg = new FileDialog(getShell(), SWT.SAVE);
+		dlg.setFilterExtensions(new String[] {"*.orm"});
+		dlg.setText("保存为");
+		
+		if ("".equals(save_dir))
+			save_dir = System.getProperty("user.dir") + "/orm";
+		
+		dlg.setFilterPath(save_dir);
+		String filePath = dlg.open();
+		if (filePath == null)
+			return;
+		filePath = filePath.replaceAll("\\\\", "/");
+		open_file_path = filePath;
+		save_dir = filePath.substring(0, filePath.lastIndexOf("/"));
+		Consts.config.setProperty("save_dir", save_dir);
+		Consts.storeConfig();
+		
+		BufferedWriter writer = null;
+		try {
+			String json = this.board.getModel().toJson();
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
+			writer.write(json);
+			//app.board.setModel(MetaMap.load(new File(file)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	/**
 	 * Create the actions.
@@ -237,8 +276,10 @@ public class AppMain2 extends ApplicationWindow {
 			saveToolItem = new Action("保存") {
 				@Override
 				public void runWithEvent(Event event) {
-					if (Exp.isEmpty(open_file_path))
+					if (Exp.isEmpty(open_file_path)) {
+						app.saveAs();
 						return;
+					}
 					String filePath = open_file_path;
 					
 					BufferedWriter writer = null;
@@ -269,44 +310,10 @@ public class AppMain2 extends ApplicationWindow {
 			saveAsToolItem = new Action("另存为") {
 				@Override
 				public void runWithEvent(Event event) {
-					String save_dir = Consts.config.getProperty("save_dir");
-					
-					FileDialog dlg = new FileDialog(app.getShell(), SWT.SAVE);
-					dlg.setFilterExtensions(new String[] {"*.orm"});
-					dlg.setText("保存为");
-					
-					if ("".equals(save_dir))
-						save_dir = System.getProperty("user.dir") + "/orm";
-					
-					dlg.setFilterPath(save_dir);
-					String filePath = dlg.open();
-					if (filePath == null)
-						return;
-					filePath = filePath.replaceAll("\\\\", "/");
-					open_file_path = filePath;
-					save_dir = filePath.substring(0, filePath.lastIndexOf("/"));
-					Consts.config.setProperty("save_dir", save_dir);
-					Consts.storeConfig();
-					
-					BufferedWriter writer = null;
-					try {
-						String json = app.board.getModel().toJson();
-						writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
-						writer.write(json);
-						//app.board.setModel(MetaMap.load(new File(file)));
-					} catch (IOException e) {
-						e.printStackTrace();
-					} finally {
-						if (writer != null) {
-							try {
-								writer.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-					
+					app.saveAs();
 				}
+
+				
 
 			};
 			saveAsToolItem.setToolTipText("另存为");
