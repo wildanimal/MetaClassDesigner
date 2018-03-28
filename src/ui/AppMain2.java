@@ -276,7 +276,8 @@ public class AppMain2 extends ApplicationWindow {
 			saveToolItem = new Action("保存") {
 				@Override
 				public void runWithEvent(Event event) {
-					if (Exp.isEmpty(open_file_path)) {
+					File openFile = new File(open_file_path);
+					if (!openFile.exists() || openFile.isDirectory()) {
 						app.saveAs();
 						return;
 					}
