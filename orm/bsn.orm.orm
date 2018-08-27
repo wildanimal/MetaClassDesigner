@@ -188,11 +188,30 @@
 					"popup": "",
 					"regexp": "",
 					"message": ""
+				},
+				{
+					"id": "1146309c-1ab3-40bd-97fc-81d8867721da",
+					"name": "Entity",
+					"label": "Java实体类",
+					"required": false,
+					"type": "String",
+					"uitype": "TextBox",
+					"datasource": "",
+					"refname": "",
+					"reffield": "",
+					"length": "",
+					"scale": "",
+					"column": ".java",
+					"value": "",
+					"notcolumn": false,
+					"popup": "",
+					"regexp": "",
+					"message": ""
 				}
 			],
-			"height": 345,
+			"height": 0,
 			"idtype": "Long",
-			"width": 414,
+			"width": 0,
 			"label": "提交选项",
 			"img": "img/class.gif",
 			"x": 24,
@@ -273,7 +292,8 @@
 					"name": "name",
 					"uitype": "TextBox",
 					"label": "名称",
-					"type": "String"
+					"type": "String",
+					"id": "6c62ddbe-ea3b-4a1d-b3c7-4ddef24071fc"
 				},
 				{
 					"required": true,
@@ -400,11 +420,11 @@
 				}
 			],
 			"dbschema": "",
-			"height": 0,
+			"height": 259,
 			"idgen": "",
 			"idtype": "Long",
 			"shape": "Rect",
-			"width": 0,
+			"width": 226,
 			"outside": false,
 			"dbtable": "orm_class",
 			"label": "类",
@@ -422,7 +442,8 @@
 			"children": [],
 			"uuid": false,
 			"idname": "",
-			"idcolumn": ""
+			"idcolumn": "",
+			"prop1": ""
 		},
 		{
 			"name": "OField",
@@ -442,7 +463,8 @@
 					"mx_internal_uid": "E0943CBE-955A-F6A1-11A2-0A4F56CE149E",
 					"uitype": "TextBox",
 					"label": "标题",
-					"type": "String"
+					"type": "String",
+					"id": "f865df54-a01e-46d2-9012-4b3fe7a9ba12"
 				},
 				{
 					"required": false,
@@ -462,12 +484,13 @@
 					"mx_internal_uid": "07D8E51B-90E8-C8B2-0DF2-D960342555E2",
 					"sroucetype": "json",
 					"label": "类型",
-					"type": "String"
+					"type": "String",
+					"id": "ad56fe60-bab2-4405-9409-2b6ceb33ccd9"
 				},
 				{
 					"required": false,
 					"uitype": "ComboBox",
-					"datasource": "[{\"data\":\"TextBox\", \"label\":\"文本框\"},{\"data\":\"Text\", \"label\":\"文本\"},{\"data\":\"TextArea\", \"label\":\"大文本框\"},{\"data\":\"BigText\", \"label\":\"大文本\"},{\"data\":\"Password\", \"label\":\"密码框\"},{\"data\":\"ComboBox\", \"label\":\"组合框\"},{\"data\":\"ListBox\", \"label\":\"下拉框\"},{\"data\":\"CheckBox\", \"label\":\"复选框\"},{\"data\":\"RadioBox\", \"label\":\"单选框\"},{\"data\":\"Number\", \"label\":\"整数\"},{\"data\":\"FFloat\", \"label\":\"实数\"},{\"data\":\"FDate\", \"label\":\"日期\"},{\"data\":\"FDateTime\", \"label\":\"日期时间\"},{\"data\":\"Color\", \"label\":\"颜色\"},{\"data\":\"Hidden\", \"label\":\"隐藏\"},{\"data\":\"SGrid\", \"label\":\"简单表格\"},{\"data\":\"Password\", \"label\":\"密码框\"},{\"data\":\"Ref\", \"label\":\"引用\"}]",
+					"datasource": "[{\"data\":\"TextBox\", \"label\":\"文本框\"},\r\n{\"data\":\"Text\", \"label\":\"文本\"},\r\n{\"data\":\"TextArea\", \"label\":\"大文本框\"},\r\n{\"data\":\"BigText\", \"label\":\"大文本\"},\r\n{\"data\":\"Password\", \"label\":\"密码框\"},\r\n{\"data\":\"ComboBox\", \"label\":\"组合框\"},\r\n{\"data\":\"ListBox\", \"label\":\"下拉框\"},\r\n{\"data\":\"CheckBox\", \"label\":\"复选框\"},\r\n{\"data\":\"RadioBox\", \"label\":\"单选框\"},\r\n{\"data\":\"Number\", \"label\":\"整数\"},\r\n{\"data\":\"FFloat\", \"label\":\"实数\"},\r\n{\"data\":\"FDate\", \"label\":\"日期\"},\r\n{\"data\":\"FDateTime\", \"label\":\"日期时间\"},\r\n{\"data\":\"Color\", \"label\":\"颜色\"},\r\n{\"data\":\"Hidden\", \"label\":\"隐藏\"},\r\n{\"data\":\"SGrid\", \"label\":\"简单表格\"},\r\n{\"data\":\"Password\", \"label\":\"密码框\"},\r\n{\"data\":\"Ref\", \"label\":\"引用\"}]",
 					"sourcetype": "json",
 					"name": "uitype",
 					"mx_internal_uid": "1D1008A0-DB60-3E92-9A7B-D929A0B5CDAC",
@@ -482,7 +505,9 @@
 					"notcolumn": false,
 					"popup": "",
 					"regexp": "",
-					"message": ""
+					"message": "",
+					"refname": "",
+					"reffield": ""
 				},
 				{
 					"required": false,
@@ -491,7 +516,8 @@
 					"name": "datasource",
 					"uitype": "TextArea",
 					"label": "数据源",
-					"type": "String"
+					"type": "String",
+					"id": "2fa7aad8-0af4-4bed-8788-cc3568b751b0"
 				},
 				{
 					"required": false,
@@ -604,18 +630,18 @@
 				}
 			],
 			"dbschema": "",
-			"height": 0,
+			"height": 310,
 			"idgen": "",
 			"idtype": "String",
 			"shape": "Rect",
-			"width": 0,
+			"width": 240,
 			"outside": false,
 			"dbtable": "orm_field",
 			"label": "属性",
 			"img": "img/class.gif",
-			"x": 829,
+			"x": 716,
 			"pkg": "",
-			"y": 14,
+			"y": 133,
 			"lineColor": 0,
 			"nottable": true,
 			"memo": "",

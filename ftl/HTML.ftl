@@ -1,11 +1,12 @@
 ﻿<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>${entity.label!""}</title>
+<title>${pkg.label!""}-${entity.label!""}</title>
 <!--#include virtual="/common/common_head.html"-->
 <script>
 var form_params = {
 	sortname : '${entity.idname}', // 默认排序列名
+        //数据表格的列头名称
+
 	//数据表格的列头名称
 	grid_column_names : [
 		"id", "${entity.idname}"
@@ -37,7 +38,8 @@ var form_params = {
 
 $(document).ready(function() {
 	//初始化菜单
-	common_menu.init('${entity.name}', 2);
+	common_menu.init('${entity.dbschema}_${entity.name}', '${entity.dbschema}');
+	common_form.setPageHeader('${entity.label!""}');
 	
 	//$('#menu_${entity.name}').removeClass('ui-state-default').addClass('ui-state-active');
 
@@ -88,7 +90,7 @@ $(document).ready(function() {
 <#list entity.fields as field>
 	<#if !Exp.isTrue(field.notcolumn)>
 	<tr>
-		<td><label for=name class="<#if Exp.isTrue(field.required)>required</#if>">
+		<td><label for="${field.name}" class="<#if Exp.isTrue(field.required)>required</#if>">
 			<#if Exp.isTrue(field.required)>*</#if>${field.label!""}：</label></td>
 			<td>
 				<#switch field.uitype>
@@ -104,7 +106,7 @@ $(document).ready(function() {
 	<div class="form_button_bar">
 		&nbsp;
 		<!--用户登录令牌值--><input name="login_token" id="login_token" type=hidden>
-		<!--主键控件--><input name="id" id="id" type=hidden>
+		<!--主键控件-->
 		<input name="${entity.idname}" id="${entity.idname}" type=hidden>
 		<!--外键控件-->
 <#list entity.many2ones as route>

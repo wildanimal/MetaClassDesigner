@@ -1,5 +1,9 @@
 ﻿<?php
+$error_msg = '{"result" : "FAIL", "msg" : "$1"}';
+
 include_once '../../common/common_include.php';
+require_once '../../common/check_access.php';
+check_access('/${entity.dbschema}/${entity.name}');
 
 $page = new SQL_Page;
 

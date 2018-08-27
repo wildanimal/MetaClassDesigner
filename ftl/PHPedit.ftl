@@ -1,5 +1,9 @@
 ﻿<?php
+$error_msg = '{"result" : "FAIL", "msg" : "$1"}';
+
 include_once '../../common/common_include.php';
+require_once '../../common/check_access.php';
+check_access('/${entity.dbschema}/${entity.name}');
 
 <#assign i=0>
 $sql = 'update ${entity.tableName} set
@@ -20,11 +24,13 @@ try {
 
 <#list entity.fields as field>
 	<#if !Exp.isTrue(field.notcolumn)>
-	$stmt->bindParam(":${field.name}",isset($_REQUEST['${field.name}']) ? $_REQUEST['${field.name}'] : null);
+	$${field.name} = $_REQUEST['${field.name}'] != null ? $_REQUEST['${field.name}'] : <#if field.type == "String">""<#else>0</#if>;
+	$stmt->bindParam(":${field.name}", $${field.name});
 	</#if>
 </#list>
 <#list entity.many2ones as route>
-	$stmt->bindParam(":${route.name}", isset($_REQUEST['${route.name}']) && $_REQUEST['${route.name}'] != '' ? $_REQUEST['${route.name}'] : null);
+	$${route.name} = $_REQUEST['${route.name}'] != null ? $_REQUEST['${route.name}'] : 0;
+	$stmt->bindParam(":${route.name}", $${route.name});
 </#list>
 
 	$stmt->bindParam(":${entity.idname}", $_REQUEST['${entity.idname}']);
