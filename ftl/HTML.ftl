@@ -1,6 +1,8 @@
 ﻿<html>
 <head>
-<title>${pkg.label!""}-${entity.label!""}</title>
+<title>
+<!--#include virtual="/common/title.txt"-->
+-${entity.label!""}</title>
 <!--#include virtual="/common/common_head.html"-->
 <script>
 var form_params = {
