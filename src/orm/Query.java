@@ -63,12 +63,12 @@ public class Query {
 			work.sql = this.session.sf.dialect.limit(
 				work.sql, firstResult, maxResults);
 		}
-		ORMgr.s().doWork(work);
+		this.session.doWork(work);
 		return work.result;
 	}
 	
 	public Object uniqueResult() throws Exception {
-		ORMgr.s().doWork(work);
+		this.session.doWork(work);
 		if (work.result.size() > 0)
 			return work.result.get(0);
 		
@@ -77,7 +77,7 @@ public class Query {
 	
 	public int executeUpdate() throws Exception {
 		work.query = false;
-		ORMgr.s().doWork(work);
+		this.session.doWork(work);
 		return work.count;
 	}
 }

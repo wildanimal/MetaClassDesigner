@@ -1,8 +1,10 @@
 package orm;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.persistence.Id;
 import javax.persistence.Transient;
@@ -16,7 +18,7 @@ import util.Reflects;
  * @author chenmin
  *
  */
-public class Session {
+public class Session implements Cloneable {
 	
 	public SessionFactory sf = null;
 	public SessionFactory getSessionFactory() {

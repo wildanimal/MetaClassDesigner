@@ -10,8 +10,6 @@ import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.action.ToolBarManager;
@@ -46,7 +44,6 @@ import metaui.FigureLabelProvider;
 import metaui.ListTreeContentProvider;
 import orm.OPackage;
 import util.Consts;
-import util.Exp;
 import util.MetaMap;
 
 public class AppMain2 extends ApplicationWindow {
@@ -69,6 +66,7 @@ public class AppMain2 extends ApplicationWindow {
 	private Action saveAsToolItem;
 	private Action openFileToolItem;
 	private Action refreshTreeItem;
+	private Action dbToClassItem;
 	private Action action;
 	ListTreeContentProvider listTreeContentProvider = null;
 	
@@ -227,7 +225,8 @@ public class AppMain2 extends ApplicationWindow {
 				@Override
 				public void runWithEvent(Event event) {
 					board.setCmd("select", null);
-				}
+				}
+
 			};
 			selectToolItem.setToolTipText("选择");
 			selectToolItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/select.gif"));
@@ -239,7 +238,8 @@ public class AppMain2 extends ApplicationWindow {
 				public void runWithEvent(Event event) {
 					board.setCmd("orm.ORoute", "img/route.gif");
 				}
-				
+				
+
 			};
 			addRouteToolItem.setToolTipText("新建路由");
 			addRouteToolItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/route.gif"));
@@ -259,7 +259,8 @@ public class AppMain2 extends ApplicationWindow {
 				@Override
 				public void runWithEvent(Event event) {
 					board.undo();
-				}			};
+				}
+			};
 			undoToolItem.setToolTipText("撤销");
 			undoToolItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/undo.gif"));
 		}
@@ -268,7 +269,8 @@ public class AppMain2 extends ApplicationWindow {
 				@Override
 				public void runWithEvent(Event event) {
 					board.redo();
-				}			};
+				}
+			};
 			redoToolItem.setToolTipText("重做");
 			redoToolItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/redo.gif"));
 		}
@@ -285,7 +287,7 @@ public class AppMain2 extends ApplicationWindow {
 					
 					BufferedWriter writer = null;
 					try {
-						String json = app.board.getModel().toJson();
+						String json = board.getModel().toJson();
 						writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
 						writer.write(json);
 						//app.board.setModel(MetaMap.load(new File(file)));
@@ -348,7 +350,8 @@ public class AppMain2 extends ApplicationWindow {
 						e.printStackTrace();
 					}
 					
-				}				
+				}
+				
 			};
 			openFileToolItem.setToolTipText("打开");
 			openFileToolItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/open.gif"));
@@ -370,13 +373,25 @@ public class AppMain2 extends ApplicationWindow {
 		refreshTreeItem = new Action("更新库表") {
 			@Override
 			public void runWithEvent(Event event) {
-				UpdateDatabaseSchemaDlg dlg = new UpdateDatabaseSchemaDlg(
+				UpdateDbChooseDlg dlg = new UpdateDbChooseDlg(
 					app.getShell(), SWT.NONE | SWT.DIALOG_TRIM);
 				dlg.open();
 			}
 		};
 		refreshTreeItem.setToolTipText("更新库表");
 		refreshTreeItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/refresh.gif"));
+
+		dbToClassItem = new Action("库表转类图") {
+			@Override
+			public void runWithEvent(Event event) {
+				DbToClassDlg dlg = new DbToClassDlg(
+					app.getShell(), SWT.NONE | SWT.DIALOG_TRIM);
+
+				dlg.open();
+			}
+		};
+		dbToClassItem.setToolTipText("库表转类图");
+		dbToClassItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/newint_wiz.gif"));
 	}
 
 	/**
@@ -387,9 +402,7 @@ public class AppMain2 extends ApplicationWindow {
 	@Override
 	protected MenuManager createMenuManager() {
 		MenuManager menuManager = new MenuManager("menu");
-		menuManager.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager arg0) {
-			}
+		menuManager.addMenuListener(arg0 -> {
 		});
 		return menuManager;
 	}
@@ -414,6 +427,7 @@ public class AppMain2 extends ApplicationWindow {
 		toolBarManager.add(redoToolItem);
 		toolBarManager.add(action);
 		toolBarManager.add(refreshTreeItem);
+		toolBarManager.add(dbToClassItem);
 		return toolBarManager;
 	}
 

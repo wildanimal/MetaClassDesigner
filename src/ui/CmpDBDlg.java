@@ -1,11 +1,13 @@
 package ui;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
 
 /**
  * 比较数据库与当前图形
@@ -61,6 +63,11 @@ public class CmpDBDlg extends Dialog {
 		Button btnClose = new Button(shlSql, SWT.NONE);
 		btnClose.setBounds(272, 494, 114, 34);
 		btnClose.setText("关闭(&C)");
-
+		btnClose.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent selectionEvent) {
+				shlSql.close();
+			}
+		});
 	}
 }
