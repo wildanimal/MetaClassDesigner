@@ -180,12 +180,14 @@ class DbToClassDlg
                     s = sf.openSession()
                     for (item in table.items) {
                         if (item.checked) {
+                            val oclass = OClass(AppMain2.board)
+
                             val tableName = item.getText(0)
                             val query = s!!.createSQLQuery("select * from information_schema.columns where table_schema = '$dbSchema' and table_name= '$tableName'")
                             val columns = query.list()
                             if (columns.isNotEmpty()) {
                                 changed = true
-                                val mclass = MetaMap()
+                                val mclass = oclass.model
                                 mclass["name"] = tableName
 //                                mclass["width"] = 100
 //                                mclass["height"] = 100
@@ -212,8 +214,7 @@ class DbToClassDlg
                                     ofield["label"] = if((row["COLUMN_COMMENT"] as String).isNullOrBlank() )
                                         row["COLUMN_NAME"] else row["COLUMN_COMMENT"]
                                 }
-                                val oclass = OClass(AppMain2.board)
-                                oclass.setModel(mclass)
+                                oclass.drawShape()
                             }
                         }
                     }

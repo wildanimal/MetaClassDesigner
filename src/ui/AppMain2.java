@@ -42,6 +42,7 @@ import meta.MFigure;
 import metaui.ExportDialog;
 import metaui.FigureLabelProvider;
 import metaui.ListTreeContentProvider;
+import orm.OClass;
 import orm.OPackage;
 import util.Consts;
 import util.MetaMap;
@@ -67,6 +68,7 @@ public class AppMain2 extends ApplicationWindow {
 	private Action openFileToolItem;
 	private Action refreshTreeItem;
 	private Action dbToClassItem;
+	private Action copyItem;
 	private Action action;
 	ListTreeContentProvider listTreeContentProvider = null;
 	
@@ -392,6 +394,26 @@ public class AppMain2 extends ApplicationWindow {
 		};
 		dbToClassItem.setToolTipText("库表转类图");
 		dbToClassItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/newint_wiz.gif"));
+
+		copyItem = new Action("复制") {
+			@Override
+			public void runWithEvent(Event event) {
+			    if (!board.selects.isEmpty())
+			    	return;
+
+				for (var figure : board.selects) {
+					var oclass = new OClass(board);
+					var model = (MetaMap)figure.model.clone();
+					oclass.setModel(model);
+
+					oclass.drawShape();
+				}
+
+				board.refreshOutline();
+			}
+		};
+		copyItem.setToolTipText("复制");
+		copyItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/copy.gif"));
 	}
 
 	/**
@@ -428,6 +450,7 @@ public class AppMain2 extends ApplicationWindow {
 		toolBarManager.add(action);
 		toolBarManager.add(refreshTreeItem);
 		toolBarManager.add(dbToClassItem);
+		toolBarManager.add(copyItem);
 		return toolBarManager;
 	}
 
