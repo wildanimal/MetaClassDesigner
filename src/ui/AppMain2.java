@@ -398,15 +398,18 @@ public class AppMain2 extends ApplicationWindow {
 		copyItem = new Action("复制") {
 			@Override
 			public void runWithEvent(Event event) {
-			    if (!board.selects.isEmpty())
+			    if (board.selects.isEmpty())
 			    	return;
 
 				for (var figure : board.selects) {
-					var oclass = new OClass(board);
-					var model = (MetaMap)figure.model.clone();
-					oclass.setModel(model);
+					if (figure.type.equals("OClass")) {
+						var oclass = new OClass(board);
+						var model = (MetaMap) figure.model.clone();
+						oclass.setModel(model);
+						oclass.newId();
 
-					oclass.drawShape();
+						oclass.drawShape();
+					}
 				}
 
 				board.refreshOutline();

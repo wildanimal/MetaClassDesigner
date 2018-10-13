@@ -194,4 +194,27 @@ public class MetaMap extends LinkedHashMap<String, Object> {
 		MetaMap pkg = (MetaMap) NatualJsonDecode.fromJson(str, MetaMap.class);
 		return pkg;
 	}
+
+	@Override
+	public Object clone() {
+		MetaMap dist = new MetaMap();
+
+		for (var key : this.keySet()) {
+			var value = this.get(key);
+			if (value instanceof ListMap) {
+			    var srcListMap = (ListMap)value;
+				var distListMap = new ListMap();
+				for (var srcChild : srcListMap) {
+					distListMap.add((MetaMap)srcChild.clone());
+				}
+				dist.put(key, distListMap);
+			} else if (value instanceof MetaMap) {
+				var distMap = ((MetaMap) value).clone();
+				dist.put(key, distMap);
+			} else
+                dist.put(key, this.get(key));
+		}
+
+		return dist;
+	}
 }

@@ -82,8 +82,9 @@ public abstract class MFigure {
 	public MFigure(DrawBoard board) {
 		super();
 		this.board = board;
-		
-		this.model.put("id", genId());
+
+		newId();
+//		this.model.put("id", genId());
 		
 		createShape();
 //		textLabel = new CLabel(this, SWT.NONE);
@@ -413,5 +414,9 @@ public abstract class MFigure {
 
 	public String genId() {
 		return UUID.randomUUID().toString();
+	}
+
+	public void newId() {
+		model.put("id", genId());
 	}
 }
