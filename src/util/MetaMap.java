@@ -199,17 +199,18 @@ public class MetaMap extends LinkedHashMap<String, Object> {
 	public Object clone() {
 		MetaMap dist = new MetaMap();
 
-		for (var key : this.keySet()) {
-			var value = this.get(key);
+		for (String key : this.keySet()) {
+			Object value = this.get(key);
 			if (value instanceof ListMap) {
-			    var srcListMap = (ListMap)value;
-				var distListMap = new ListMap();
-				for (var srcChild : srcListMap) {
+			    ListMap srcListMap = (ListMap)value;
+				ListMap distListMap = new ListMap();
+				for (MetaMap srcChild : srcListMap) {
 					distListMap.add((MetaMap)srcChild.clone());
 				}
 				dist.put(key, distListMap);
 			} else if (value instanceof MetaMap) {
-				var distMap = ((MetaMap) value).clone();
+				Object distMap = ((MetaMap) value).clone();
+
 				dist.put(key, distMap);
 			} else
                 dist.put(key, this.get(key));

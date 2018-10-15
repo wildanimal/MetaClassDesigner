@@ -1,11 +1,12 @@
 package ui;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-
+import command.Remove;
+import command.SingleSelect;
+import meta.DrawBoard;
+import meta.MFigure;
+import metaui.ExportDialog;
+import metaui.FigureLabelProvider;
+import metaui.ListTreeContentProvider;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -24,28 +25,14 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.wb.swt.ResourceManager;
-
-import command.Remove;
-import command.SingleSelect;
-import meta.DrawBoard;
-import meta.MFigure;
-import metaui.ExportDialog;
-import metaui.FigureLabelProvider;
-import metaui.ListTreeContentProvider;
 import orm.OClass;
 import orm.OPackage;
 import util.Consts;
 import util.MetaMap;
+
+import java.io.*;
 
 public class AppMain2 extends ApplicationWindow {
 	
@@ -401,10 +388,10 @@ public class AppMain2 extends ApplicationWindow {
 			    if (board.selects.isEmpty())
 			    	return;
 
-				for (var figure : board.selects) {
+				for (MFigure figure : board.selects) {
 					if (figure.type.equals("OClass")) {
-						var oclass = new OClass(board);
-						var model = (MetaMap) figure.model.clone();
+						OClass oclass = new OClass(board);
+						MetaMap model = (MetaMap) figure.model.clone();
 						oclass.setModel(model);
 						oclass.newId();
 
