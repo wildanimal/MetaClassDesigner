@@ -56,6 +56,7 @@ public class AppMain2 extends ApplicationWindow {
 	private Action refreshTreeItem;
 	private Action dbToClassItem;
 	private Action copyItem;
+	private Action xlsToClassItem;
 	private Action action;
 	ListTreeContentProvider listTreeContentProvider = null;
 	
@@ -404,6 +405,19 @@ public class AppMain2 extends ApplicationWindow {
 		};
 		copyItem.setToolTipText("复制");
 		copyItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/copy.gif"));
+
+		xlsToClassItem = new Action("EXCEL转类图") {
+			@Override
+			public void runWithEvent(Event event) {
+				DbToClassDlg dlg = new DbToClassDlg(
+					app.getShell(), SWT.NONE | SWT.DIALOG_TRIM);
+
+				dlg.open();
+			}
+		};
+		xlsToClassItem.setToolTipText("EXCEL转类图");
+		xlsToClassItem.setImageDescriptor(ResourceManager.getImageDescriptor(AppMain2.class, "/img/newint_wiz.gif"));
+
 	}
 
 	/**

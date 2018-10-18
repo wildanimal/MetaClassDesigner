@@ -173,6 +173,7 @@ class DbToClassDlg
                 cfg.password = pwdText!!.text
                 val dbSchema = dbUrl.substring(dbUrl.lastIndexOf("/") + 1)
 
+                var x = 0
                 var changed = false
                 val sf = cfg.buildSessionFactory()
                 var s : Session? = null
@@ -180,21 +181,27 @@ class DbToClassDlg
                     s = sf.openSession()
                     for (item in table.items) {
                         if (item.checked) {
+                            val tableName = item.getText(0)
+                            
+                            val findOClass = AppMain2.board.getFigure(tableName)
+                            if (findOClass != null) {
+                                AppMain2.board.removeFigure(findOClass)
+                            }
+
                             val oclass = OClass(AppMain2.board)
 
-                            val tableName = item.getText(0)
                             val query = s!!.createSQLQuery("select * from information_schema.columns where table_schema = '$dbSchema' and table_name= '$tableName'")
                             val columns = query.list()
                             if (columns.isNotEmpty()) {
                                 changed = true
                                 val mclass = oclass.model
                                 mclass["name"] = tableName
-//                                mclass["width"] = 100
-//                                mclass["height"] = 100
-                                mclass["x"] = 100
-                                mclass["y"] = 100
+                                x+= 100
+                                mclass["x"] = x
+                                mclass["y"] = 10
                                 mclass["label"] = tableName
-                                mclass["id"] = "id"
+                                mclass["idname"] = "id"
+                                mclass["idtype"] = "Long"
 
                                 val fields = ListMap()
                                 mclass["fields"] = fields
